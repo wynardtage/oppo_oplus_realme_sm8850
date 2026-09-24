@@ -409,6 +409,15 @@ export ARCH=arm64 SUBARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
 export LD=ld.lld HOSTLD=ld.lld AR=llvm-ar NM=llvm-nm AS=clang READELF=llvm-readelf
 export OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump OBJSIZE=llvm-size STRIP=llvm-strip
+export KBUILD_BUILD_USER="Wynardtage"
+FORK_KSU_DIR="$(find . -maxdepth 4 -type d -name "kernelsu" 2>/dev/null | head -n 1)"
+if [ -n "$FORK_KSU_DIR" ]; then
+    cd "$FORK_KSU_DIR"
+    git config user.name "Wynardtage"
+    git config user.email "Wynardtage@github.com"
+    git commit --amend --author="Wynardtage <Wynardtage@github.com>" --no-edit || true
+    cd "$WORKDIR"
+fi
 KCFLAGS+=" -no-canonical-prefixes"
 KCFLAGS+=" -O2"
 KCFLAGS+=" -pipe"
